@@ -1,9 +1,8 @@
 package data;
 import com.mysql.cj.jdbc.Driver;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MySqlMoviesDao implements MoviesDao {
@@ -22,7 +21,27 @@ public class MySqlMoviesDao implements MoviesDao {
 
         @Override
         public List<Movie> all () throws SQLException {
-            return null;
+        Statement statement = connection.createStatement();
+
+        ResultSet rs = statement.executeQuery("SELECT * FROM movies");
+
+        List<Movie> movies = new ArrayList<>();
+
+        while(rs.next()){
+            movies.add(new Movie(
+                  rs.getInt("id"),
+                  rs.getString("title"),
+                  rs.getInt("release_date"),
+                  rs.getString("director"),
+                  rs.getString("cast"),
+                  rs.getString("rating"),
+                  rs.getString("poster"),
+                  rs.getString("genre"),
+                  rs.getString("plot")
+
+            ));
+        }
+        return movies;
         }
 
         @Override
