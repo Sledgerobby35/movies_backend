@@ -55,10 +55,7 @@ public class MySqlMoviesDao implements MoviesDao {
         }
 
 
-        @Override
-        public void destroy ( int id) throws SQLException {
 
-        }
         @Override
     public void insertAll(Movie[] movies) throws SQLException {
 
@@ -104,8 +101,32 @@ public class MySqlMoviesDao implements MoviesDao {
 
         PreparedStatement statement = connection.prepareStatement(sql.toString());
 
-        statement.executeUpdate();
 
+        statement.setString(1, movie.getTitle());
+        statement.setInt(2, movie.getRelease_date());
+        statement.setString(3, movie.getCast());
+        statement.setString(4, movie.getDirector());
+        statement.setString(5, movie.getGenre());
+        statement.setString(6, movie.getPlot());
+        statement.setString(7, movie.getRating());
+        statement.setInt(8, movie.getId());
+        statement.setString(9, movie.getPoster());
+
+                statement.executeUpdate();
+
+
+    }
+
+    @Override
+    public void destroy (int id) throws SQLException {
+
+        String sql = "DELETE FROM movies WHERE id = ?";
+
+        PreparedStatement statement = connection.prepareStatement(sql);
+
+        statement.setInt(1, id);
+
+        statement.execute();
 
     }
 
