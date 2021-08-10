@@ -21,7 +21,7 @@ public class DaoFactory {
 
                 }
             }
-            return moviesDaos;
+            return moviesDao;
         }
     }
 
